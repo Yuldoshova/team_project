@@ -55,13 +55,42 @@ export async function getCategoryById(req, res) {
     if (foundCategory.length == 0) {
         res.send({
             status: 404,
-            message: "Product not found!",
+            message: "Category not found!",
         });
         return;
     }
     res.send({
         message: "Success!✅",
         data: foundCategory,
+    });
+    return;
+}
+
+export async function getProductsByCategoryId(req,res){
+    const { categoryId } = req.params;
+    const foundCategory = await fetchData(
+        `SELECT * FROM categories WHERE id=${categoryId}`
+    );
+
+    if (foundCategory.length == 0) {
+        res.send({
+            status: 404,
+            message: "Category not found!",
+        });
+        return;
+    }
+
+    const parentCategories = await fetchData(
+        `SELECT pc.id as id, pc.name as name, pc.image_url as image_url, 
+        json_agg(json_build_object('id', ch.id, 'name', ch.name, 'image_url', ch.image_url)) as subcategories 
+        FROM (SELECT * FROM category WHERE category_id is null) pc 
+        FULL JOIN (SELECT * FROM category WHERE category_id is not null) ch 
+        ON ch.category_id = pc.id GROUP BY pc.id, pc.name, pc.image_url`
+      );
+
+    res.send({
+        message: "Success!✅",
+        data: parentCategories,
     });
     return;
 }
@@ -77,7 +106,7 @@ export async function updateCategory(req, res) {
     if (foundCategory.length == 0) {
         res.send({
             status: 404,
-            message: "Product not found!",
+            message: "Category not found!",
         });
         return;
     }
