@@ -20,11 +20,11 @@ app.use("/public", express.static(path.join(__dirname, "views", "public")));
 app.get("/", (req, res) => {
   const query = req.query;
 
-  if (query.tabName == "students") {
-    return res.render("student", { title: "Student page", layout: "error" });
+  if (query.tabName == "products") {
+    return res.render("product", { title: "Product page", layout: "error" });
   }
 
   res.render("home", { title: "Home page" });
 });
 
-app.listen(4000, "localhost", console.log("listening 4000"));
+app.listen(8000, "localhost", console.log("listening 8000..."));
