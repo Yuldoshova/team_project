@@ -1,13 +1,12 @@
-const express = require("express");
-const { create } = require("express-handlebars");
-const path = require("path");
+import express from "express";
+import { create } from "express-handlebars"
+import path from "path"
 
 const app = express();
 
 const hbs = create({
   extname: ".hbs",
   defaultLayout: "main",
-  partialsDir: path.join(__dirname, "views", "partial-custom"),
 });
 
 // set view engine to HANDLEBARS
@@ -15,7 +14,7 @@ app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 
 // set static serve
-app.use("/public", express.static(path.join(__dirname, "views", "public")));
+app.use("/public", express.static(path.join(process.cwd(), "views", "public")));
 
 app.get("/", (req, res) => {
   const query = req.query;
