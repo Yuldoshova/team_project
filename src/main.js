@@ -9,17 +9,14 @@ const hbs = create({
   defaultLayout: "main",
 });
 
-// set view engine to HANDLEBARS
 app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 
-// set static serve
-<<<<<<< Updated upstream
+
 app.use("/public", express.static(path.join(process.cwd(), "views", "public")));
-=======
-app.use("/public", express.static(path.join(__dirname, "views", "public")));
+
 app.set("views",path.join(process.cwd(),"src","views"))
->>>>>>> Stashed changes
+
 
 app.get("/", (req, res) => {
   const query = req.query;
