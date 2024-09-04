@@ -14,16 +14,35 @@ app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 
 // set static serve
+<<<<<<< Updated upstream
 app.use("/public", express.static(path.join(process.cwd(), "views", "public")));
+=======
+app.use("/public", express.static(path.join(__dirname, "views", "public")));
+app.set("views",path.join(process.cwd(),"src","views"))
+>>>>>>> Stashed changes
 
 app.get("/", (req, res) => {
   const query = req.query;
-
-  if (query.tabName == "students") {
-    return res.render("student", { title: "Student page", layout: "error" });
+const products = [{
+  id: 1,
+  title: "Otkan kunlar",
+  description: "Otkan kunlar kitobi ",
+  price: 55000,
+  rating: 10,
+  brend: "Shifo nashr"
+}]
+const  categories = [
+  {
+    id:1,
+    name: "kitoblar",
+    img_url: "/url"
   }
 
-  res.render("home", { title: "Home page" });
+]
+  if (query.tabName == "category") {
+    return res.render("category", {categories});
+  }
+  res.render("home", { title: "Home page",categories });
 });
 
 app.listen(4000, "localhost", console.log("listening 4000"));
