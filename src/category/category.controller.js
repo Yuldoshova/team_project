@@ -39,60 +39,36 @@ export async function getAllCategories(_, res) {
         'SELECT * FROM categories'
     );
 
-    res.send({
-        message: "Success!✅",
-        data: categories,
-    });
-    return;
+    return categories
 }
 
-export async function getCategoryById(req, res) {
-    const { categoryId } = req.params;
+export async function getCategoryById(categoryId) {
+    // const { categoryId } = req.params;
     const foundCategory = await fetchData(
         `SELECT * FROM categories WHERE id=${categoryId}`
     );
 
     if (foundCategory.length == 0) {
-        res.send({
-            status: 404,
-            message: "Category not found!",
-        });
-        return;
+        return "Category not found!"
     }
-    res.send({
-        message: "Success!✅",
-        data: foundCategory,
-    });
-    return;
+    return foundCategory
 }
 
-export async function getProductsByCategoryId(req,res){
-    const { categoryId } = req.params;
+export async function getProductsByCategoryId(categoryId) {
+    // const { categoryId } = req.params;
     const foundCategory = await fetchData(
         `SELECT * FROM categories WHERE id=${categoryId}`
     );
 
     if (foundCategory.length == 0) {
-        res.send({
-            status: 404,
-            message: "Category not found!",
-        });
-        return;
+        return "Category not found!"
     }
 
-    const parentCategories = await fetchData(
-        `SELECT pc.id as id, pc.name as name, pc.image_url as image_url, 
-        json_agg(json_build_object('id', ch.id, 'name', ch.name, 'image_url', ch.image_url)) as subcategories 
-        FROM (SELECT * FROM category WHERE category_id is null) pc 
-        FULL JOIN (SELECT * FROM category WHERE category_id is not null) ch 
-        ON ch.category_id = pc.id GROUP BY pc.id, pc.name, pc.image_url`
-      );
+    const productsByCategoryId = await fetchData(
+        `SELECT * from products where category_id=${categoryId}`
+    );
 
-    res.send({
-        message: "Success!✅",
-        data: parentCategories,
-    });
-    return;
+    return productsByCategoryId
 }
 
 export async function updateCategory(req, res) {

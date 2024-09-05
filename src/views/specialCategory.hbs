@@ -1,5 +1,16 @@
 <h1>Maxsus Kategoriyalar</h1>
+<h1>Kategoriyalar</h1>
 
+<ul>
+    {{#each categories}}
+        <li>
+            <a href="/categories/{{this.id}}">
+                <img src="/uploads/{{this.image_url}}" alt="{{this.name}}" />
+                <h3>{{this.name}}</h3>
+            </a>
+        </li>
+    {{/each}}
+</ul>
 <section>
     <h2>Eng arzon tovarlar</h2>
     <ul>
@@ -16,7 +27,7 @@
 <section>
     <h2>Eng mashhur tovarlar</h2>
     <ul>
-        {{#each popularProducts}}
+        {{#each popularProduct}}
             <li>
                 <img src="/uploads/{{this.image_url}}" alt="{{this.title}}" />
                 <h3>{{this.title}}</h3>

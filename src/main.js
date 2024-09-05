@@ -20,33 +20,39 @@ app.set("view engine", ".hbs");
 
 app.use("/public", express.static(path.join(process.cwd(), "src", "public")));
 
-app.set("views",path.join(process.cwd(),"src","views"))
+app.set("views", path.join(process.cwd(), "src", "views"))
 
 // asosiy sahifa
-app.get("/", async(req, res) => {
-  const cheapestProduct = await fetchData('SELECT * FROM products ORDER BY price ASC LIMIT 5') 
-  const popularPproduct = await fetchData('SELECT * FROM products ORDER BY rating ASC LIMIT 5')
+app.get("/", async (req, res) => {
+  const categories = await getAllCategories()
+  const cheapestProducts = await fetchData('SELECT * FROM products ORDER BY price ASC LIMIT 5;')
+  const popularProduct = await fetchData('SELECT * FROM products ORDER BY rating DESC LIMIT 5;')
 
-  res.render("specialCategory", { cheapestProduct,popularPproduct });
+  res.render("specialCategory", { categories, cheapestProducts, popularProduct });
 });
 
-// get all category
-app.get('/categories',async (req,res)=>{
-  const {categoryId} = req.params
-  const categories = await getAllCategories(categoryId)
-  res.render('/categories',{title: "Kategoriyalar", categories})
-})
 // category-product 
-app.get('/categories/:categoryId',async (req,res)=>{
-  const {categoryId} = req.params
-  const category = await getCategoryById(categoryId)
-  const product = await getProductsByCategoryId(categoryId)
-  res.render('category-product',category,product)
+app.get('/categories/:categoryId', async (req, res) => {
+  const { categoryId } = req.params
+  const category= await getCategoryById(categoryId)
+  const products = await getProductsByCategoryId(categoryId)
+  res.render('category-product',{ category, products})
+})
+
+
+
+
+
+// get all category
+app.get('/categories', async (req, res) => {
+  const { categoryId } = req.params
+  const categories = await getAllCategories()
+  res.render('categories', { title: "Kategoriyalar", categories })
 })
 // product details  
-app.get('/products/:productId',async (req,res)=>{
+app.get('/products/:productId', async (req, res) => {
   const product = await getProductById(req.params.productId)
-  res.render('product',product)
+  res.render('product', product)
 })
 
 app.listen(4000, "localhost", console.log("listening 4000"));
