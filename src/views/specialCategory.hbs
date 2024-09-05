@@ -1,0 +1,27 @@
+<h1>Maxsus Kategoriyalar</h1>
+
+<section>
+    <h2>Eng arzon tovarlar</h2>
+    <ul>
+        {{#each cheapestProducts}}
+            <li>
+                <img src="/uploads/{{this.image_url}}" alt="{{this.title}}" />
+                <h3>{{this.title}}</h3>
+                <p>Narxi: {{this.price}} so'm</p>
+            </li>
+        {{/each}}
+    </ul>
+</section>
+
+<section>
+    <h2>Eng mashhur tovarlar</h2>
+    <ul>
+        {{#each popularProducts}}
+            <li>
+                <img src="/uploads/{{this.image_url}}" alt="{{this.title}}" />
+                <h3>{{this.title}}</h3>
+                <p>Narxi: {{this.price}} so'm</p>
+            </li>
+        {{/each}}
+    </ul>
+</section>

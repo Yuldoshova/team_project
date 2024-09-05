@@ -1,0 +1,12 @@
+<h1>Kategoriyalar</h1>
+
+<ul>
+    {{#each categories}}
+        <li>
+            <a href="/categories/{{this.id}}">
+                <img src="/uploads/{{this.image_url}}" alt="{{this.name}}" />
+                <h3>{{this.name}}</h3>
+            </a>
+        </li>
+    {{/each}}
+</ul>
