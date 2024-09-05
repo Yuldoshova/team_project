@@ -4,7 +4,7 @@
     {{#each categories}}
         <li>
                 <img src="/uploads/{{this.image_url}}" alt="{{this.name}}" />
-                <a href="/categories/{{this.id}}">
+                <a href="/api/v1/categories/category-products/{{this.id}}">
                 <h3>{{this.name}}</h3>
             </a>
         </li>

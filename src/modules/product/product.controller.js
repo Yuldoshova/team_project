@@ -1,5 +1,5 @@
 import formidable from "formidable";
-import { fetchData } from "../config/postgres.config.js";
+import { fetchData } from "../../config/postgres.config.js";
 import path from "path";
 import fs from "fs"
 
@@ -38,7 +38,7 @@ export async function createProduct(req, res) {
     return;
 }
 
-export async function getAllProducts(_, res) {
+export async function getAllProducts(req, res) {
     const { filter, sort, order } = req.query;
 
     let query = "SELECT * FROM products"
@@ -58,11 +58,7 @@ export async function getAllProducts(_, res) {
 
     const allProducts = await fetchData(query, ...queryparams);
 
-    res.send({
-        message: "Success!✅",
-        data: allProducts,
-    });
-    return;
+    res.render('product', allProducts)
 }
 
 export async function filter(req, res) {
@@ -95,7 +91,6 @@ export async function getProductById(req, res) {
     });
     return;
 }
-
 
 export async function updateProduct(req, res) {
     const productId = req.params.productId;
@@ -182,3 +177,4 @@ export async function deleteProduct(req, res) {
     });
     return;
 }
+

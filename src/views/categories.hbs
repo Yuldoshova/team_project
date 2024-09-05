@@ -14,7 +14,7 @@
             <ul>
                 {{#each categories}}
                 <li>
-                    <a href="/categories/{{this.id}}">
+                    <a href="/api/v1/categories/category-products/{{this.id}}">
                         <img class="category-img" src="/uploads/{{this.image_url}}" alt="{{this.name}}" />
                         <h3>{{this.name}}</h3>
                     </a>

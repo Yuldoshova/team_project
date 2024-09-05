@@ -1,5 +1,5 @@
 import formidable from "formidable";
-import { fetchData } from "../config/postgres.config.js";
+import {fetchData} from "../../config/postgres.config.js"
 import path from "path";
 import fs from "fs"
 
@@ -39,36 +39,36 @@ export async function getAllCategories(_, res) {
         'SELECT * FROM categories'
     );
 
-    return categories
+    res.render('categories', { title: "Kategoriyalar", categories })
 }
 
-export async function getCategoryById(categoryId) {
-    // const { categoryId } = req.params;
-    const foundCategory = await fetchData(
+export async function getCategoryById(req, res) {
+    const { categoryId } = req.params;
+    const category = await fetchData(
         `SELECT * FROM categories WHERE id=${categoryId}`
     );
 
-    if (foundCategory.length == 0) {
-        return "Category not found!"
+    if (category.length == 0) {
+        res.render('category-product', { error: "Category not found!" })
     }
-    return foundCategory
+    res.render('category-product', { category })
 }
 
-export async function getProductsByCategoryId(categoryId) {
-    // const { categoryId } = req.params;
-    const foundCategory = await fetchData(
+export async function getProductsByCategoryId(req, res) {
+    const { categoryId } = req.params;
+    const category = await fetchData(
         `SELECT * FROM categories WHERE id=${categoryId}`
     );
 
-    if (foundCategory.length == 0) {
-        return "Category not found!"
+    if (category.length == 0) {
+        res.render('category-product', { error: "Category not found!" })
     }
 
-    const productsByCategoryId = await fetchData(
+    const products = await fetchData(
         `SELECT * from products where category_id=${categoryId}`
     );
 
-    return productsByCategoryId
+    res.render('category-product', { category, products })
 }
 
 export async function updateCategory(req, res) {
