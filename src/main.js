@@ -4,6 +4,7 @@ import path from "path"
 import { fetchData } from "./config/postgres.config.js";
 import { getAllCategories, getCategoryById, getProductsByCategoryId } from "./category/category.controller.js";
 import { getProductById } from "./product/product.Controller.js";
+import { categoryRoutes } from "./category/category.routes.js";
 
 const app = express();
 
@@ -18,9 +19,12 @@ app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 
 
-app.use("/public", express.static(path.join(process.cwd(), "src", "public")));
+app.use("/public", express.static(path.join(process.cwd(), "src", "views", "public")));
+app.use("/uploads", express.static("uploads"));
 
 app.set("views", path.join(process.cwd(), "src", "views"))
+
+app.use('/api/categories', categoryRoutes)
 
 // asosiy sahifa
 app.get("/", async (req, res) => {
@@ -34,9 +38,9 @@ app.get("/", async (req, res) => {
 // category-product 
 app.get('/categories/:categoryId', async (req, res) => {
   const { categoryId } = req.params
-  const category= await getCategoryById(categoryId)
+  const category = await getCategoryById(categoryId)
   const products = await getProductsByCategoryId(categoryId)
-  res.render('category-product',{ category, products})
+  res.render('category-product', { category, products })
 })
 
 
