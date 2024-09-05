@@ -1,3 +1,45 @@
-h1 {
-  background-color: greenyellow;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+.categories{
+  display: flex;
+  column-gap: 35px;
+  width: 520px;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.category{
+  width: 120px;
+  height: 250px;
+  border-color: #dfadad;
+  text-align: center;
+  
+}
+.category h3{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 18px;
+  color: #0a0a0a;
+  margin-top: 5px;
+}
+.category-img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid #0a0a0a;
+}
+
+
+.categories ul{
+  display: flex;
 }

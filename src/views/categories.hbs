@@ -1,12 +1,30 @@
-<h1>Kategoriyalar</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<ul>
-    {{#each categories}}
-        <li>
-            <a href="/categories/{{this.id}}">
-                <img src="/uploads/{{this.image_url}}" alt="{{this.name}}" />
-                <h3>{{this.name}}</h3>
-            </a>
-        </li>
-    {{/each}}
-</ul>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category</title>
+    <link rel="stylesheet" href="/src/views/public/main.css">
+</head>
+<body>
+    <h1>Kategoriyalar</h1>
+
+    <div class="categories">
+        <div class="category">
+            <ul>
+                {{#each categories}}
+                <li>
+                    <a href="/categories/{{this.id}}">
+                        <img class="category-img" src="/uploads/{{this.image_url}}" alt="{{this.name}}" />
+                        <h3>{{this.name}}</h3>
+                    </a>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>

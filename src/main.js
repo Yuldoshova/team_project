@@ -3,8 +3,9 @@ import { create } from "express-handlebars"
 import path from "path"
 import { fetchData } from "./config/postgres.config.js";
 import { getAllCategories, getCategoryById, getProductsByCategoryId } from "./category/category.controller.js";
-import { getProductById } from "./product/product.Controller.js";
+import { createProduct, getProductById } from "./product/product.controller.js";
 import { categoryRoutes } from "./category/category.routes.js";
+import { productRoutes } from "./product/product.routes.js";
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use("/uploads", express.static("uploads"));
 app.set("views", path.join(process.cwd(), "src", "views"))
 
 app.use('/api/categories', categoryRoutes)
+app.use('/api/products', productRoutes)
 
 // asosiy sahifa
 app.get("/", async (req, res) => {
