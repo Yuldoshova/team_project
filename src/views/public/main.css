@@ -4,14 +4,16 @@
   box-sizing: border-box;
 }
 body{
-  display: flex;
+  display: block;
   justify-content: center;
   align-items: center;
   margin-top: 50px;
 }
+
 .categories{
   display: flex;
-  column-gap: 35px;
+  margin-left: auto;
+  margin-right: auto;
   width: 520px;
   justify-content: center;
   align-items: center;
@@ -42,4 +44,9 @@ body{
 
 .categories ul{
   display: flex;
+}
+.product img{
+  width: 250px;
+  height: 250px;
+
 }

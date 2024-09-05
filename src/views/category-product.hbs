@@ -1,11 +1,16 @@
 <h1>{{category.name}}</h1>
 
-<ul>
-    {{#each products}}
+<div class="product">
+    <ul>
+        {{#each products}}
         <li>
             <img src="/uploads/{{this.image_url}}" alt="rasm" />
             <h3>{{this.title}}</h3>
+            <p>Ta'rifi: {{this.description}}</p>
             <p>Narxi: {{this.price}} so'm</p>
+            <p>Reytingi: {{this.rating}}</p>
+            <p>Ombordagi mavjudlik: {{this.count}}</p>
         </li>
-    {{/each}}
-</ul>
+        {{/each}}
+    </ul>
+</div>
