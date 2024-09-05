@@ -96,6 +96,7 @@ export async function getProductById(req, res) {
     return;
 }
 
+
 export async function updateProduct(req, res) {
     const productId = req.params.productId;
     const [fields, files] = await form.parse(req);

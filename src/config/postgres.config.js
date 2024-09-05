@@ -8,7 +8,6 @@ const pool = new pg.Pool({
   port: databaseConfig.port,
   database: databaseConfig.database,
 });
-
 export async function fetchData(query, ...params) {
   const client = await pool.connect();
 

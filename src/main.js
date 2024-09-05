@@ -1,45 +1,52 @@
 import express from "express";
 import { create } from "express-handlebars"
 import path from "path"
+import { fetchData } from "./config/postgres.config.js";
+import { getAllCategories, getCategoryById, getProductsByCategoryId } from "./category/category.controller.js";
+import { getProductById } from "./product/product.Controller.js";
 
 const app = express();
 
 const hbs = create({
   extname: ".hbs",
-  defaultLayout: "main",
+  // defaultLayout: "main",
+  layoutsDir: path.join(process.cwd(), "src", "views", "layout"),
+  partialsDir: path.join(process.cwd(), "src", "views", "partial-custom")
 });
 
 app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 
 
-app.use("/public", express.static(path.join(process.cwd(), "views", "public")));
+app.use("/public", express.static(path.join(process.cwd(), "src", "public")));
 
 app.set("views",path.join(process.cwd(),"src","views"))
 
+// asosiy sahifa
+app.get("/", async(req, res) => {
+  const cheapestProduct = await fetchData('SELECT * FROM products ORDER BY price ASC LIMIT 5') 
+  const popularPproduct = await fetchData('SELECT * FROM products ORDER BY rating ASC LIMIT 5')
 
-app.get("/", (req, res) => {
-  const query = req.query;
-const products = [{
-  id: 1,
-  title: "Otkan kunlar",
-  description: "Otkan kunlar kitobi ",
-  price: 55000,
-  rating: 10,
-  brend: "Shifo nashr"
-}]
-const  categories = [
-  {
-    id:1,
-    name: "kitoblar",
-    img_url: "/url"
-  }
-
-]
-  if (query.tabName == "category") {
-    return res.render("category", {categories});
-  }
-  res.render("home", { title: "Home page",categories });
+  res.render("specialCategory", { cheapestProduct,popularPproduct });
 });
+
+// get all category
+app.get('/categories',async (req,res)=>{
+  const {categoryId} = req.params
+  const categories = await getAllCategories(categoryId)
+  res.render('/categories',{title: "Kategoriyalar", categories})
+})
+// category-product 
+app.get('/categories/:categoryId',async (req,res)=>{
+  const {categoryId} = req.params
+  const category = await getCategoryById(categoryId)
+  const product = await getProductsByCategoryId(categoryId)
+  res.render('category-product',category,product)
+})
+// product details  
+app.get('/products/:productId',async (req,res)=>{
+  const product = await getProductById(req.params.productId)
+  res.render('product',product)
+})
 
 app.listen(4000, "localhost", console.log("listening 4000"));
